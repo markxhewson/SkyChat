@@ -1,0 +1,11 @@
+name: SkyChat
+version: '${project.version}'
+main: xyz.lotho.me.SkyChat
+api-version: 1.18
+authors: [ Lotho ]
+
+commands:
+  chat:
+
+depend:
+  - PlaceholderAPI

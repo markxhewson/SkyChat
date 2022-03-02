@@ -6,38 +6,73 @@ import org.bukkit.inventory.ItemStack;
 import xyz.lotho.me.SkyChat;
 import xyz.lotho.me.interfaces.utils.Menu;
 import xyz.lotho.me.managers.User;
+import xyz.lotho.me.utils.Chat;
 import xyz.lotho.me.utils.Colors;
+import xyz.lotho.me.utils.Item;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ChatSettingsMenu extends Menu {
 
     protected final SkyChat instance;
 
-    public ChatSettingsMenu(SkyChat instance) {
+    protected final Player player;
+    protected final List<Integer> slots;
+
+    public ChatSettingsMenu(SkyChat instance, Player player) {
         super("Your Chat Settings", 27);
 
         this.instance = instance;
+        this.player = player;
+
+        this.slots = Arrays.asList(10, 12, 14, 16);
+
         setItems();
     }
 
     @Override
     public void setItems() {
+        int[] index = new int[1];
+        Arrays.stream(Colors.values()).filter(Colors::getSetting).forEach((color) -> {
+            super.getInventory().setItem(this.slots.get(index[0]), Item.createItem(
+                    color.getMaterial(),
+                    color.getColor() + color.getDisplayName(),
+                    Chat.colorize(player.hasPermission(color.getPermission()) ? "&7Click to activate the " + color.getDisplayName() + " chat setting." : "&cThis chat setting is locked, you cannot access it.")
+            ));
+            index[0]++;
+        });
         super.fillRemainingSlots();
-
-
     }
 
     public void handleClick(Player clicker, ItemStack clickedItem, int slot) {
         if (clickedItem.equals(super.FILLER_ITEM)) return;
 
         User user = this.instance.userManager.getUser(clicker.getUniqueId());
-        String color = ChatColor.stripColor(clickedItem.getItemMeta().getDisplayName());
+        String settingName = ChatColor.stripColor(clickedItem.getItemMeta().getDisplayName());
 
-        Colors chatColor = Colors.valueOf(color.replaceAll(" ", "").toUpperCase());
+        Colors setting = Colors.valueOf(settingName.replaceAll(" ", "").toUpperCase());
 
+        boolean mode = false;
+        if (clicker.hasPermission(setting.getPermission())) {
+            if (settingName.toLowerCase().contains("italic")) {
+                mode = !user.getItalic();
+                user.setItalic(!user.getItalic());
+            }
+            if (settingName.toLowerCase().contains("bold")) {
+                mode = !user.getBold();
+                user.setBold(!user.getBold());
+            }
+            if (settingName.toLowerCase().contains("underline")) {
+                mode = !user.getUnderline();
+                user.setUnderline(!user.getUnderline());
+            }
+            if (settingName.toLowerCase().contains("strikethrough")) {
+                mode = !user.getStrikethrough();
+                user.setStrikethrough(!user.getStrikethrough());
+            }
 
-        if (clicker.hasPermission(chatColor.getPermission())) {
-            user.setChatColor("&" + chatColor.getColor().getChar());
-            clicker.closeInventory();
+            this.player.sendMessage(Chat.colorize("&aYou have successfully &e" + (mode ? "enabled" : "disabled") + " &athe &e" + setting.getDisplayName() + " &asetting!"));
         }
     }
 }

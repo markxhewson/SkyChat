@@ -10,6 +10,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import xyz.lotho.me.SkyChat;
 import xyz.lotho.me.interfaces.ChatColorsMenu;
+import xyz.lotho.me.interfaces.ChatSettingsMenu;
 
 public class handleInventory implements Listener {
 
@@ -33,6 +34,14 @@ public class handleInventory implements Listener {
 
         if (inventory.getName().equals(chatColorsMenu.getName()) && event.getSlotType() != InventoryType.SlotType.OUTSIDE) {
             chatColorsMenu.handleClick((Player) event.getWhoClicked(), event.getCurrentItem(), event.getSlot());
+            event.setCancelled(true);
+            return;
+        }
+
+        ChatSettingsMenu chatSettingsMenu = new ChatSettingsMenu(this.instance, (Player) event.getWhoClicked());
+
+        if (inventory.getName().equals(chatSettingsMenu.getName()) && event.getSlotType() != InventoryType.SlotType.OUTSIDE) {
+            chatSettingsMenu.handleClick((Player) event.getWhoClicked(), event.getCurrentItem(), event.getSlot());
             event.setCancelled(true);
             return;
         }

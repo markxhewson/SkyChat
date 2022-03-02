@@ -38,7 +38,7 @@ public class ChatColorsMenu extends Menu {
         super.getInventory().setItem(18, super.FILLER_ITEM);
         super.getInventory().setItem(26, super.FILLER_ITEM);
 
-        Arrays.stream(Colors.values()).forEach((color) -> {
+        Arrays.stream(Colors.values()).filter((color) -> !color.getSetting()).forEach((color) -> {
             super.getInventory().addItem(
                     Item.createItemShort(
                             Material.STAINED_GLASS_PANE,

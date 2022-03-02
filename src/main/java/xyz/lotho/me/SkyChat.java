@@ -37,7 +37,17 @@ public final class SkyChat extends JavaPlugin {
         mySQL = new MySQL(this);
         sql = new SQL(this);
 
-        sql.createTable(this.config.getString("database.table"), "id INTEGER NOT NULL PRIMARY KEY, uuid VARCHAR(36) NOT NULL, bio TEXT NOT NULL, chatColor VARCHAR(3) NOT NULL");
+        sql.createTable(
+                this.config.getString("database.table"),
+                "id INTEGER NOT NULL PRIMARY KEY," +
+                        "uuid VARCHAR(36) NOT NULL," +
+                        "bio TEXT NOT NULL," +
+                        "chatColor VARCHAR(3) NOT NULL," +
+                        "italic BOOLEAN NOT NULL," +
+                        "bold BOOLEAN NOT NULL," +
+                        "underline BOOLEAN NOT NULL," +
+                        "strikethrough BOOLEAN NOT NULL"
+        );
 
         this.getServer().getOnlinePlayers().forEach((player) -> {
             this.userManager.handleUserCreation(player.getUniqueId());

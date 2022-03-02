@@ -69,6 +69,7 @@ public class ChatManagerMenu extends Menu {
                 break;
 
             case ITEM_FRAME:
+                new ChatSettingsMenu(this.instance, clicker).open(clicker);
                 break;
 
             default:

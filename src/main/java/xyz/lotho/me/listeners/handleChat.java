@@ -26,12 +26,21 @@ public class handleChat implements Listener {
         event.setCancelled(true);
 
         Player sender = event.getPlayer();
-        String message = event.getMessage();
-
         User user = this.instance.userManager.getUser(sender.getUniqueId());
+
+        StringBuilder message = new StringBuilder();
+
+        if (user.getBold()) message.append("&l");
+        if (user.getItalic()) message.append("&o");
+        if (user.getUnderline()) message.append("&n");
+        if (user.getStrikethrough()) message.append("&m");
+
+        message.append(event.getMessage());
 
         String format = this.instance.config.getString("chat.format");
         TextComponent formatted = new TextComponent(PlaceholderAPI.setPlaceholders(sender, format.replace("{playerName}", sender.getName()).replace("{content}", user.getChatColor() + message)));
+
+
 
         BaseComponent[] msg = new BaseComponent[]{new TextComponent(PlaceholderAPI.setPlaceholders(sender, Chat.colorize(this.instance.getConfig().getString("chat.hover").replace("{playerBio}", user.getBio()))))};
         formatted.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, msg));

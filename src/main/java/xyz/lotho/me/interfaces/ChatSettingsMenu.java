@@ -1,6 +1,7 @@
 package xyz.lotho.me.interfaces;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import xyz.lotho.me.SkyChat;
@@ -42,11 +43,17 @@ public class ChatSettingsMenu extends Menu {
             ));
             index[0]++;
         });
+
+        super.getInventory().setItem(18, Item.createItem(Material.ARROW, "&7&lBack"));
         super.fillRemainingSlots();
     }
 
     public void handleClick(Player clicker, ItemStack clickedItem, int slot) {
         if (clickedItem.equals(super.FILLER_ITEM)) return;
+        if (clickedItem.getType() == Material.ARROW) {
+            new ChatManagerMenu(this.instance).open(clicker);
+            return;
+        }
 
         User user = this.instance.userManager.getUser(clicker.getUniqueId());
         String settingName = ChatColor.stripColor(clickedItem.getItemMeta().getDisplayName());

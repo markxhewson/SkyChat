@@ -48,11 +48,17 @@ public class ChatColorsMenu extends Menu {
                     )
             );
         });
+        super.getInventory().setItem(27, Item.createItem(Material.ARROW, "&7&lBack"));
+
         super.fillRemainingSlots();
     }
 
     public void handleClick(Player clicker, ItemStack clickedItem, int slot) {
         if (clickedItem.equals(super.FILLER_ITEM)) return;
+        if (clickedItem.getType() == Material.ARROW) {
+            new ChatManagerMenu(this.instance).open(clicker);
+            return;
+        }
 
         User user = this.instance.userManager.getUser(clicker.getUniqueId());
         String color = ChatColor.stripColor(clickedItem.getItemMeta().getDisplayName());

@@ -1,10 +1,7 @@
 package xyz.lotho.me.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +25,7 @@ public class handleChat implements Listener {
         Player sender = event.getPlayer();
         User user = this.instance.userManager.getUser(sender.getUniqueId());
 
+        String format = this.instance.config.getString("chat.format");
         StringBuilder message = new StringBuilder();
 
         if (user.getBold()) message.append("&l");
@@ -37,12 +35,16 @@ public class handleChat implements Listener {
 
         message.append(event.getMessage());
 
-        String format = this.instance.config.getString("chat.format");
-        TextComponent formatted = new TextComponent(PlaceholderAPI.setPlaceholders(sender, format.replace("{playerName}", sender.getName()).replace("{content}", user.getChatColor() + message)));
+        boolean isStaff = sender.hasPermission(this.instance.config.getString("utils.staffPermission"));
+        String staffColor = this.instance.config.getString("utils.staffColor");
 
+        TextComponent formatted = new TextComponent(
+                PlaceholderAPI.setPlaceholders(sender, format.replace("{playerName}", sender.getName()).replace("{content}", (isStaff ? user.getChatColor() : staffColor) + message))
+        );
 
-
-        BaseComponent[] msg = new BaseComponent[]{new TextComponent(PlaceholderAPI.setPlaceholders(sender, Chat.colorize(this.instance.getConfig().getString("chat.hover").replace("{playerBio}", user.getBio()))))};
+        BaseComponent[] msg = new BaseComponent[]{
+                new TextComponent(PlaceholderAPI.setPlaceholders(sender, Chat.colorize(this.instance.getConfig().getString("chat.hover").replace("{playerBio}", user.getBio()))))
+        };
         formatted.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, msg));
         formatted.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + sender.getName() + " "));
 

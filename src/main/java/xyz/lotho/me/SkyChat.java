@@ -11,6 +11,7 @@ import xyz.lotho.me.listeners.handleChat;
 import xyz.lotho.me.listeners.handleConnections;
 import xyz.lotho.me.listeners.handleDisconnects;
 import xyz.lotho.me.listeners.handleInventory;
+import xyz.lotho.me.managers.PlaceholderManager;
 import xyz.lotho.me.managers.User;
 import xyz.lotho.me.managers.UserManager;
 import xyz.lotho.me.storage.MySQL;
@@ -36,6 +37,10 @@ public final class SkyChat extends JavaPlugin {
 
         mySQL = new MySQL(this);
         sql = new SQL(this);
+
+        if (this.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PlaceholderManager(this).register();
+        }
 
         sql.createTable(
                 this.config.getString("database.table"),

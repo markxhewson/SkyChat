@@ -4,6 +4,10 @@ database:
   username: "admin"
   password: "admin2"
 
+utils:
+  staffPermission: 'skycloud.staff'
+  staffColor: '&4'
+
 chat:
   defaultBio: "&eHey! I'm the default bio value text"
   format: "%luckperms_prefix%{playerName}: &f{content}"

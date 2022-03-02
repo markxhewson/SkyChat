@@ -39,12 +39,13 @@ public class handleChat implements Listener {
 
         message.append(event.getMessage());
 
-        boolean isStaff = sender.hasPermission(this.instance.config.getString("utils.staffPermission"));
         String staffColor = this.instance.config.getString("utils.staffColor");
 
         String formatted = PlaceholderAPI.setPlaceholders(
-                sender, format.replace("{playerName}", sender.getName()).replace("{content}", (!isStaff ? user.getChatColor() : staffColor) + message)
+                sender, format.replace("{playerName}", sender.getName())
+                        .replace("{content}", (!user.isStaff() ? user.getChatColor() : staffColor) + message)
         );
+
         BaseComponent[] component = TextComponent.fromLegacyText(formatted);
 
         Arrays.stream(component).iterator().forEachRemaining((baseComponent) -> {

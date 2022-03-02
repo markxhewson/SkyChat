@@ -65,9 +65,14 @@ public class ChatColorsMenu extends Menu {
 
         Colors chatColor = Colors.valueOf(color.replaceAll(" ", "").toUpperCase());
 
+        if (user.isStaff()) {
+            clicker.sendMessage(Chat.colorize("&cYou can not enable other chat colors while you are staff."));
+            return;
+        }
 
         if (clicker.hasPermission(chatColor.getPermission())) {
             user.setChatColor("&" + chatColor.getColor().getChar());
+            this.player.sendMessage(Chat.colorize("&aYou have enabled " + chatColor.getColor() + chatColor.getDisplayName() + " &acoloured chat!"));
             clicker.closeInventory();
         }
     }

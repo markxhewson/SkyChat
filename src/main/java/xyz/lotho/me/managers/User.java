@@ -77,6 +77,10 @@ public class User {
         );
     }
 
+    public boolean isStaff() {
+        return this.instance.getServer().getPlayer(this.uuid).hasPermission(this.instance.config.getString("utils.staffPermission"));
+    }
+
     public int getSettingsEnabled() {
         int counter = 0;
 

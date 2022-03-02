@@ -13,7 +13,7 @@ public enum Colors {
     GRAY(ChatColor.GRAY, Material.STAINED_GLASS, 8, "Gray", "skychat.gray", false),
     DARKGREEN(ChatColor.DARK_GREEN, Material.STAINED_GLASS, 13, "Dark Green", "skychat.darkGreen", false),
     BLUE(ChatColor.BLUE, Material.STAINED_GLASS, 11, "Blue", "skychat.blue", false),
-    DARK_PURPLE(ChatColor.DARK_PURPLE, Material.STAINED_GLASS, 2, "Dark Purple", "skychat.darkPurple", false),
+    DARKPURPLE(ChatColor.DARK_PURPLE, Material.STAINED_GLASS, 2, "Dark Purple", "skychat.darkPurple", false),
     BLACK(ChatColor.BLACK, Material.STAINED_GLASS, 15, "Black", "skychat.black", false),
     YELLOW(ChatColor.YELLOW, Material.STAINED_GLASS, 4, "Yellow", "skychat.yellow", false),
     DARKGRAY(ChatColor.DARK_GRAY, Material.STAINED_GLASS, 7, "Dark Gray", "skychat.darkGray", false),

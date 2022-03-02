@@ -39,7 +39,7 @@ public class handleChat implements Listener {
         String staffColor = this.instance.config.getString("utils.staffColor");
 
         TextComponent formatted = new TextComponent(
-                PlaceholderAPI.setPlaceholders(sender, format.replace("{playerName}", sender.getName()).replace("{content}", (isStaff ? user.getChatColor() : staffColor) + message))
+                PlaceholderAPI.setPlaceholders(sender, format.replace("{playerName}", sender.getName()).replace("{content}", (!isStaff ? user.getChatColor() : staffColor) + message))
         );
 
         BaseComponent[] msg = new BaseComponent[]{

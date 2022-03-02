@@ -77,6 +77,17 @@ public class User {
         );
     }
 
+    public int getSettingsEnabled() {
+        int counter = 0;
+
+        if (this.getUnderline()) counter += 1;
+        if (this.getBold()) counter += 1;
+        if (this.getStrikethrough()) counter += 1;
+        if (this.getItalic()) counter += 1;
+
+        return counter;
+    }
+
     public String getBio() {
         return this.bio;
     }

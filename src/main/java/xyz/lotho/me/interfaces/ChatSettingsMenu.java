@@ -64,18 +64,38 @@ public class ChatSettingsMenu extends Menu {
         if (clicker.hasPermission(setting.getPermission())) {
             if (settingName.toLowerCase().contains("italic")) {
                 mode = !user.getItalic();
+                if (mode && user.getSettingsEnabled() >= 2) {
+                    this.player.sendMessage(Chat.colorize("&cYou can not enable more than two chat settings at a time!"));
+                    return;
+                }
+
                 user.setItalic(!user.getItalic());
             }
             if (settingName.toLowerCase().contains("bold")) {
                 mode = !user.getBold();
+                if (mode && user.getSettingsEnabled() >= 2) {
+                    this.player.sendMessage(Chat.colorize("&cYou can not enable more than two chat settings at a time!"));
+                    return;
+                }
+
                 user.setBold(!user.getBold());
             }
             if (settingName.toLowerCase().contains("underline")) {
                 mode = !user.getUnderline();
+                if (mode && user.getSettingsEnabled() >= 2) {
+                    this.player.sendMessage(Chat.colorize("&cYou can not enable more than two chat settings at a time!"));
+                    return;
+                }
+
                 user.setUnderline(!user.getUnderline());
             }
             if (settingName.toLowerCase().contains("strikethrough")) {
                 mode = !user.getStrikethrough();
+                if (mode && user.getSettingsEnabled() >= 2) {
+                    this.player.sendMessage(Chat.colorize("&cYou can not enable more than two chat settings at a time!"));
+                    return;
+                }
+
                 user.setStrikethrough(!user.getStrikethrough());
             }
 
